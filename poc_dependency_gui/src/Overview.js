@@ -51,9 +51,7 @@ class Overview extends React.Component {
                     {content}
                     </tbody>
                 </table>
-                <div>
-                    generated from poc-dependencies, version: 0.0.1, Copyright Michael Krauße 2020
-                </div>
+
             </div>
 
         );
