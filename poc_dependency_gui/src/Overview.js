@@ -1,5 +1,7 @@
 import React from "react";
 
+import content from "./data/data.json"
+
 /**
  * Displays a simple overview for all artifacts.
  */
@@ -9,36 +11,32 @@ class Overview extends React.Component {
         super(props);
         this.state = {
             keys: ["gradleVersion", "org.junit.jupiter:junit-jupiter", "com.nhaarman.mockitokotlin2:mockito-kotlin"],
-            "content": [
-                {
-                    "projectName": "imglib",
-                    "version": "1.4.0",
-                    "directDependencies": {
-                        "gradleVersion": "6.3",
-                        "org.junit.jupiter:junit-jupiter": "5.6.2",
-                        "com.nhaarman.mockitokotlin2:mockito-kotlin": "2.2.0"
-                    }
-                }
-            ]
+            "content": content.content
         };
 
     }
 
     renderConsumer(element, displayKeys) {
-      return displayKeys.map((keyValue) => <td>{element.directDependencies[keyValue]}</td>);
+        return displayKeys.map((keyValue) => <td>{element.directDependencies[keyValue]}</td>);
     }
 
     render() {
         const headline = this.state.keys.map((element) => <th>{element}</th>);
-        const content = this.state.content.map((element) => <tr><td>{element.projectName}</td>{this.renderConsumer(element, this.state.keys)}</tr>)
+        const content = this.state.content.map((element) => <tr>
+            <td>{element.projectName}</td>
+            {this.renderConsumer(element, this.state.keys)}</tr>)
         return (
             <div>
                 <table>
+                    <thead>
                     <tr>
-                        <th>version</th>
+                        <th>consumer</th>
                         {headline}
                     </tr>
-                    {content}
+                    </thead>
+                    <tbody>
+                        {content}
+                    </tbody>
                 </table>
                 <div>
                     generated from poc-dependencies, version: 0.0.1, Copyright Michael Krauße 2020
