@@ -13,7 +13,6 @@ class Overview extends React.Component {
             keys: ["gradleVersion", "org.junit.jupiter:junit-jupiter", "com.nhaarman.mockitokotlin2:mockito-kotlin"],
             "content": content.content
         };
-
     }
 
     renderConsumer(element, displayKeys) {
@@ -24,6 +23,7 @@ class Overview extends React.Component {
         const headline = this.state.keys.map((element) => <th>{element}</th>);
         const content = this.state.content.map((element) => <tr>
             <td>{element.projectName}</td>
+            <td>{element.version}</td>
             {this.renderConsumer(element, this.state.keys)}</tr>)
         return (
             <div>
@@ -31,6 +31,7 @@ class Overview extends React.Component {
                     <thead>
                     <tr>
                         <th>consumer</th>
+                        <th>version</th>
                         {headline}
                     </tr>
                     </thead>
