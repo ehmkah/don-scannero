@@ -10,7 +10,7 @@ class Overview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            keys: ["gradleVersion", "org.junit.jupiter:junit-jupiter", "com.nhaarman.mockitokotlin2:mockito-kotlin"],
+            keys: this.calculos(content.content),
             "content": content.content
         };
     }
@@ -19,10 +19,22 @@ class Overview extends React.Component {
         return displayKeys.map((keyValue) => <td>{element.directDependencies[keyValue]}</td>);
     }
 
+    calculos(liste) {
+        let result = new Set()
+        liste.map((element) => {
+            for(const property in element.directDependencies) {
+                result.add(property);
+            }
+        });
+
+
+        return Array.from(result.values());
+    }
+
     render() {
         const headline = this.state.keys.map((element) => <th>{element}</th>);
         const content = this.state.content.map((element) => <tr>
-            <td>{element.projectName}</td>
+            <td id={'projectname.' + element.projectName} key={'projectname.' + element.projectName}>{element.projectName}</td>
             <td>{element.version}</td>
             {this.renderConsumer(element, this.state.keys)}</tr>)
         return (
@@ -36,7 +48,7 @@ class Overview extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {content}
+                    {content}
                     </tbody>
                 </table>
                 <div>
