@@ -1,3 +1,18 @@
+= POC - dependencies
+
+* shows dependencies in a nice way to have an overview who is using what
+
+== Using
+
+* open `data/data.json` add your information manually
+** fields under directDependencies are free they will be shown
+** yes this will be changed soon, but now its okay
+* run `npm start`
+* open http://localhost:3000 - you see your dependencies
+
+== Developing
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
