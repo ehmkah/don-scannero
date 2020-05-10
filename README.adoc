@@ -14,7 +14,8 @@
 
 == Building
 
-
+* `docker build . -t poc_dependencies`
+* `docker run -p 3000:80 poc_dependencies`
 
 === Stuff from generator
 
