@@ -6,6 +6,7 @@ COPY . .
 RUN yarn build
 
 FROM nginx:1.18
-WORKDIR /public
 COPY --from=0 /usr/src/app/build /usr/share/nginx/html/
+RUN mkdir /usr/share/nginx/html/data
+
 EXPOSE 80

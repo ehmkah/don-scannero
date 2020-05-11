@@ -15,7 +15,10 @@
 == Building
 
 * `docker build . -t poc_dependencies`
-* `docker run -p 3000:80 poc_dependencies`
+* `docker run -p 3000:80 --mount type=bind,source=/<somePATH>,target=/usr/share/nginx/html/data poc_dependencies`
+**  You have to mount a directory which contains `data.json`.
+    At the moment this is the _database_ which can be updated and report will be updated also
+    Assumed you are `poc_dependencies/poc_dependency/` you can use command `docker run -p 3000:80 --mount type=bind,source=$(pwd)/src/data,target=/usr/share/nginx/html/data poc_dependencies`
 
 === Stuff from generator
 
