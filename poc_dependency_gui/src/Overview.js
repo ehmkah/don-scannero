@@ -1,6 +1,5 @@
 import React from "react";
 
-import content from "./data/data.json"
 
 /**
  * Displays a simple overview for all artifacts.
@@ -10,8 +9,8 @@ class Overview extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            keys: this.calculos(content.content),
-            "content": content.content
+            keys: props.keys,
+            content: props.content
         };
     }
 
@@ -19,17 +18,7 @@ class Overview extends React.Component {
         return displayKeys.map((keyValue) => <td>{element.directDependencies[keyValue]}</td>);
     }
 
-    calculos(liste) {
-        let result = new Set()
-        liste.map((element) => {
-            for(const property in element.directDependencies) {
-                result.add(property);
-            }
-        });
 
-
-        return Array.from(result.values());
-    }
 
     render() {
         const headline = this.state.keys.map((element) => <th>{element}</th>);
