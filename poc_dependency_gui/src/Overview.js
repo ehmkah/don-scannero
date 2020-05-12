@@ -8,10 +8,6 @@ class Overview extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            keys: props.keys,
-            content: props.content
-        };
     }
 
     renderConsumer(element, displayKeys) {
@@ -19,13 +15,17 @@ class Overview extends React.Component {
     }
 
 
-
     render() {
-        const headline = this.state.keys.map((element) => <th>{element}</th>);
-        const content = this.state.content.map((element) => <tr>
-            <td id={'projectname.' + element.projectName} key={'projectname.' + element.projectName}>{element.projectName}</td>
+        if (this.props.keys.length === 0) {
+            return (<div/>);
+        }
+
+        const headline = this.props.keys.map((element) => <th>{element}</th>);
+        const content = this.props.content.map((element) => <tr>
+            <td id={'projectname.' + element.projectName}
+                key={'projectname.' + element.projectName}>{element.projectName}</td>
             <td>{element.version}</td>
-            {this.renderConsumer(element, this.state.keys)}</tr>)
+            {this.renderConsumer(element, this.props.keys)}</tr>)
         return (
             <div>
                 <table>

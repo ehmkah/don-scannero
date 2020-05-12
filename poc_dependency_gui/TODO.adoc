@@ -1,1 +1,4 @@
+* laden der Datenbank über REST Schnittstelle
+
+DONE
 * laden eines gemounteten depency baums (soll nicht mitkompilliert werden)

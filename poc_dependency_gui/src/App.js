@@ -9,9 +9,16 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            keys: [],
+            content: {}
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
             keys: this.calculos(content.content),
             content: content.content
-        }
+        });
     }
 
     calculos(liste) {
