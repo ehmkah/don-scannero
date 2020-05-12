@@ -12,9 +12,15 @@
 
 == Developing
 
+* build docker container (see _Building_)
+* run it locally with port forwarded to 3001 `docker run -p 3001:80 --mount type=bind,source=$(pwd)/src/data,target=/usr/share/nginx/html/data poc_dependencies`
+** needed json data can be loaded with http-request, needs to be accessable under `http://localhost:3001/data/data.json`
+
 == Building
 
 * `docker build . -t poc_dependencies`
+
+
 * `docker run -p 3000:80 --mount type=bind,source=/<somePATH>,target=/usr/share/nginx/html/data poc_dependencies`
 **  You have to mount a directory which contains `data.json`.
     At the moment this is the _database_ which can be updated and report will be updated also

@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Overview from "./Overview";
 import Copyright from "./Copyright";
-import content from "./data/data.json";
 
 class App extends React.Component {
 
@@ -15,10 +14,33 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            keys: this.calculos(content.content),
-            content: content.content
-        });
+        var url = 'http://localhost:3000/data/data.json';
+        if (process.env.NODE_ENV === 'development') {
+            url = 'http://localhost:3001/data/data.json'
+        }
+
+        fetch(url)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        keys: this.calculos(result.content),
+                        content: result.content
+                    });
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                    alert(error);
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
+
+
     }
 
     calculos(liste) {
