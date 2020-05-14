@@ -1,4 +1,5 @@
-* laden der Datenbank über REST Schnittstelle
+* extractor for gradle
 
 DONE
+* laden der Datenbank über REST Schnittstelle
 * laden eines gemounteten depency baums (soll nicht mitkompilliert werden)
