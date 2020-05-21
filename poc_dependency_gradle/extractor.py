@@ -3,8 +3,6 @@ import subprocess
 from model import Artifact
 
 direct_dependency_identifiers = ["\--- ", "+--- "]
-#direct_dependency_identifiers = ["+--- "]
-
 
 def parse(line):
     replaced = line
