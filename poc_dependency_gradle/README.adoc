@@ -1,0 +1,3 @@
+== run
+* run `runner.py` where gradle project lives
+* wait for more functionality to be implemented
