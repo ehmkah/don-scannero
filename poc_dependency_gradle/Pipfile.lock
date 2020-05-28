@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e8336336dbbdd3784b4f6f04c425e089571fbe19ec6852e20a6dc31ac8137585"
+            "sha256": "a95d258221fb2502f23f3774fd262d8c961125b312adf894c0ab503644332ad1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,7 +15,41 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "neo4j-driver": {
+            "hashes": [
+                "sha256:33e13aa8b2b1478bfe22f87e174fe412c0b020790013010ebf06e2d36d0e9de3"
+            ],
+            "index": "pypi",
+            "version": "==1.7.6"
+        },
+        "neobolt": {
+            "hashes": [
+                "sha256:1d0d5efce7221fc4f0ffc4a315bc5272708be5aa2aef5434269e800372d8db89"
+            ],
+            "version": "==1.7.17"
+        },
+        "neotime": {
+            "hashes": [
+                "sha256:4e0477ba0f24e004de2fa79a3236de2bd941f20de0b5db8d976c52a86d7363eb"
+            ],
+            "version": "==1.7.4"
+        },
+        "pytz": {
+            "hashes": [
+                "sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed",
+                "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"
+            ],
+            "version": "==2020.1"
+        },
+        "six": {
+            "hashes": [
+                "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a",
+                "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"
+            ],
+            "version": "==1.14.0"
+        }
+    },
     "develop": {
         "attrs": {
             "hashes": [

@@ -26,6 +26,10 @@
     At the moment this is the _database_ which can be updated and report will be updated also
     Assumed you are `poc_dependencies/poc_dependency/` you can use command `docker run -p 3000:80 --mount type=bind,source=$(pwd)/src/data,target=/usr/share/nginx/html/data poc_dependencies`
 
+* running neo4j server
+** `docker run -p 7474:7474 -p 7687:7687 --env=NEO4J_AUTH=none neo4j:4.0.4`
+* f
+
 === Stuff from generator
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -5,7 +5,9 @@ verify_ssl = true
 
 [dev-packages]
 pytest="*"
+
 [packages]
+neo4j-driver = "~=1.7"
 
 [requires]
 python_version = "3.7"
