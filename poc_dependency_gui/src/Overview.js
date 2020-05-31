@@ -6,10 +6,6 @@ import React from "react";
  */
 class Overview extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     renderConsumer(element, displayKeys) {
         return displayKeys.map((keyValue) => <td>{element.directDependencies[keyValue]}</td>);
     }
