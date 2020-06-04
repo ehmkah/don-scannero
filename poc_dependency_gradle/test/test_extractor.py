@@ -19,7 +19,15 @@ def test_foo():
     assert actual.depends_on[4].artifact_name == "com.nhaarman.mockitokotlin2:mockito-kotlin"
     assert actual.depends_on[4].artifact_version == "2.2.0"
 
-def test_parse():
-    actual = parse("\\\\--- com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    assert actual.artifact_name == "com.nhaarman.mockitokotlin2:mockito-kotlin"
-    assert actual.artifact_version == "2.2.0"
+
+@pytest.mark.parametrize("givenArtifactLine, expectedArtifactName, expectedArtifactVersion",
+                         [
+                             ("\\\\--- com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
+                              "com.nhaarman.mockitokotlin2:mockito-kotlin", "2.2.0"),
+                             ("\\\\--- com.nhaarman.mockitokotlin2:mockito-kotlin -> 2.2.0",
+                              "com.nhaarman.mockitokotlin2:mockito-kotlin", "2.2.0")
+                         ])
+def test_parse(givenArtifactLine, expectedArtifactName, expectedArtifactVersion):
+    actual = parse(givenArtifactLine)
+    assert actual.artifact_name == expectedArtifactName
+    assert actual.artifact_version == expectedArtifactVersion

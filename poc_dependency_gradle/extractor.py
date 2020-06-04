@@ -7,7 +7,7 @@ def parse(line):
     replaced = line
     for identifier in direct_dependency_identifiers:
         replaced = replaced.replace(identifier, "")
-
+    replaced = replaced.replace(" -> ", ":")
     splitted = replaced.split(":")
     return Artifact(splitted[0] + ":" + splitted[1], splitted[2])
 
