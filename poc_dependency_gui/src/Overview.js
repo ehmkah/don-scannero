@@ -7,6 +7,7 @@ import React from "react";
 class Overview extends React.Component {
 
     renderConsumer(element, displayKeys) {
+
         return displayKeys.map((keyValue) => <td>{element.directDependencies[keyValue]}</td>);
     }
 

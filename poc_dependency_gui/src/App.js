@@ -24,58 +24,53 @@ class App extends React.Component {
             console.log(error)
         }
 
-        const session = driver.session()
-        session.run('match(n)-[r:DEPENDS_ON]->(k) where n.artifact_name = \'unknown\' return k\n').then((result) => {
-            session.close()
-            var content = [];
-            var directDependencies = {};
-            for (var dependency in  result.records) {
-                directDependencies[result.records[dependency].get(0).properties.artifact_name] = result.records[dependency].get(0).properties.artifact_version;
-            }
+        this.loadAndSetState(driver);
+    }
 
-            var entry = {
-                "projectName": "unknown",
-                "directDependencies": directDependencies
-            }
+    loadAndSetState(driver) {
+        var session = driver.session();
 
-            content.push(entry);
+        var artifacts = [];
+        let keys = new Set();
+
+        session.run("match (n)-[:DEPENDS_ON]->(k) return n,k;").then((result) => {
+            session.close();
+            for (var recordId in result.records) {
+                const projectName = result.records[recordId].get(0).properties.artifact_name;
+                const projectVersion = result.records[recordId].get(0).properties.artifact_version;
+                const dependencyName = result.records[recordId].get(1).properties.artifact_name;
+                const dependencyVersion = result.records[recordId].get(1).properties.artifact_version;
+                const artifact = this.getOrCreateArtifact(artifacts, projectName, projectVersion);
+                artifact.directDependencies[dependencyName] = dependencyVersion;
+                if (this.artifactNotAdded(artifacts, projectName)) {
+                    artifacts.push(artifact);
+                }
+                keys.add(dependencyName);
+            }
 
             this.setState({
-                keys: this.calculos(content),
-                content: content
+                keys: Array.from(keys),
+                content: artifacts
             });
-            //console.log(content);
-            // ... on application exit:
-            driver.close()
-        })
+        });
+    }
 
-        /**  var url = 'http://localhost:3000/data/data.json';
-         if (process.env.NODE_ENV === 'development') {
-            url = 'http://localhost:3001/data/data.json'
+    artifactNotAdded(artifacts, projectName) {
+        return artifacts.length === 0 || artifacts.find((value => value.artifact_name !== projectName)) === undefined;
+    }
+
+    getOrCreateArtifact(artifacts, projectName, projectVersion) {
+        if (this.artifactNotAdded(artifacts, projectName)) {
+            return {
+                "projectName": projectName,
+                "version": projectVersion,
+                "directDependencies": {}
+            };
+
+        } else {
+            return artifacts[0];
         }
-
-         fetch(url)
-         .then(res => res.json())
-         .then(
-         (result) => {
-                    this.setState({
-                        keys: this.calculos(result.content),
-                        content: result.content
-                    });
-                },
-         // Note: it's important to handle errors here
-         // instead of a catch() block so that we don't swallow
-         // exceptions from actual bugs in components.
-         (error) => {
-                    alert(error);
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-         )
-
-         **/
+        ;
     }
 
     calculos(liste) {
