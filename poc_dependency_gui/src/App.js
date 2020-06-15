@@ -42,9 +42,7 @@ class App extends React.Component {
                 const dependencyVersion = result.records[recordId].get(1).properties.artifact_version;
                 const artifact = this.getOrCreateArtifact(artifacts, projectName, projectVersion);
                 artifact.directDependencies[dependencyName] = dependencyVersion;
-                if (this.artifactNotAdded(artifacts, projectName)) {
-                    artifacts.push(artifact);
-                }
+
                 keys.add(dependencyName);
             }
 
@@ -55,22 +53,32 @@ class App extends React.Component {
         });
     }
 
-    artifactNotAdded(artifacts, projectName) {
-        return artifacts.length === 0 || artifacts.find((value => value.artifact_name !== projectName)) === undefined;
+    artifactAdded(artifacts, projectName) {
+        if (artifacts.length === 0) {
+            return false;
+        }
+        for (const artifact of artifacts) {
+            if (artifact.projectName === projectName) {
+                return true;
+            }
+        }
+        return false;
     }
 
     getOrCreateArtifact(artifacts, projectName, projectVersion) {
-        if (this.artifactNotAdded(artifacts, projectName)) {
-            return {
+        if (!this.artifactAdded(artifacts, projectName)) {
+            const artifact = {
                 "projectName": projectName,
                 "version": projectVersion,
                 "directDependencies": {}
             };
-
-        } else {
-            return artifacts[0];
+            artifacts.push(artifact);
         }
-        ;
+        for (const artifact of artifacts) {
+            if (artifact.projectName === projectName) {
+                return artifact;
+            }
+        }
     }
 
     calculos(liste) {
