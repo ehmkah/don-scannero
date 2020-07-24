@@ -1,0 +1,24 @@
+== Scanner for gradle
+
+This gradle plugin scans gradle based projects (sic!)
+
+== Using
+
+* Run `./gradlew publishMavenLocal`
+** Maybe one day plugin is available via some well done mavenRepo
+* Add the following to your `build.gradle`
+```
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath "de.ehmkah.products:poc_dependency_gradle_via_plugin:0.0.1"
+    }
+}
+
+apply plugin: "de.ehmkah.projects.poc_dependencies"
+```
+
+* run `./gradlew scanner`
+
