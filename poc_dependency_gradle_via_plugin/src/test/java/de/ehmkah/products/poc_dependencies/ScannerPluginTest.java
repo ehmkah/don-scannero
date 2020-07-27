@@ -11,8 +11,9 @@ public class ScannerPluginTest {
     public void testPlugin() {
         Project project = ProjectBuilder.builder().build();
         project.getPlugins().apply("de.ehmkah.projects.poc_dependencies");
-
+        project.getTasks().create("greet", GreetingToFileTask.class);
         Assert.assertNotNull(project.getTasks().findByName("scanner"));
+        Assert.assertNotNull(project.getTasks().findByName("greet"));
     }
 
 
