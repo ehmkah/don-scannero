@@ -1,5 +1,6 @@
 package de.ehmkah.products.poc_dependencies;
 
+import de.ehmkah.products.poc_dependencies.writer.Neo4Repository;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -13,8 +14,11 @@ import javax.inject.Inject;
 
 class GreetingToFileTask extends DefaultTask {
 
+    private Neo4Repository neo4Repository;
+
     @Inject
     public GreetingToFileTask() {
+        neo4Repository = new Neo4Repository("bolt://localhost:7687", "neo4j", "password");
     }
 
     @Input
@@ -26,17 +30,19 @@ class GreetingToFileTask extends DefaultTask {
     @Input
     String version = "<versionShouldBeSet/>";
 
+
     @TaskAction
     public void scan() {
         System.out.println("groupID:" + groupID);
         System.out.println("artifactId:" + artifactId);
         System.out.println("version:" + version);
+        neo4Repository.writeArtifact(groupID, artifactId, version);
         Project project = getProject();
         ConfigurationContainer configurations = project.getConfigurations();
         for (Configuration configuration : configurations) {
             DependencySet dependencies = configuration.getDependencies();
             for (Dependency dependency : dependencies) {
-                System.out.println(dependency.getGroup() + ":" + dependency.getName() + ":" + dependency.getVersion());
+               // neo4Repository.writeDependency(dependency);
             }
 
         }
