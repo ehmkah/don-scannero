@@ -17,20 +17,33 @@ public class Neo4Repository implements AutoCloseable {
         driver.close();
     }
 
-    public void writeDependency(final Dependency message) {
+    public void writeDependency(String groupID, String artifactId, String version, final Dependency dependency) {
+        writeArtifact(dependency.getGroup(), dependency.getName(), dependency.getVersion());
         try (Session session = driver.session()) {
-            String greeting = session.writeTransaction(new TransactionWork<String>() {
+            session.writeTransaction(new TransactionWork<String>() {
                 @Override
                 public String execute(Transaction tx) {
-                    Result result = tx.run("CREATE (a:Greeting) " +
-                                    "SET a.message = $message " +
-                                    "RETURN a.message + ', from node ' + id(a)",
-                            parameters("message", message));
+                    String query = "MATCH(a: Artifact), (b:Artifact)  " +
+                            "WHERE " +
+                            "a.artifact_name = $source_artifact_name AND " +
+                            "a.artifact_version= $source_artifact_version " +
+                            "AND b.artifact_name = $dependency_artifact_name " +
+                            "AND b.artifact_version = $dependency_artifact_version" +
+                            " CREATE(a) - [r: DEPENDS_ON]->(b) " +
+                            "RETURN a.version + ', from node ' + id(a)";
+                    Result result = tx.run(query + " ",
+                            parameters("source_artifact_name", getArtifactname(groupID, artifactId),
+                                    "source_artifact_version", version,
+                                    "dependency_artifact_name", getArtifactname(dependency.getGroup(), dependency.getName()),
+                                    "dependency_artifact_version", dependency.getVersion()));
                     return result.single().get(0).asString();
                 }
             });
-            System.out.println(greeting);
         }
+    }
+
+    private String getArtifactname(String groupID, String artifactId) {
+        return groupID + ":" + artifactId;
     }
 
     public void writeArtifact(String groupID, String artifactId, String version) {
@@ -40,9 +53,9 @@ public class Neo4Repository implements AutoCloseable {
                 public String execute(Transaction tx) {
                     Result result = tx.run("CREATE (a:Artifact) " +
                                     "SET a.artifact_name = $artifact_name, " +
-                                    "a.version = $version " +
+                                    "a.artifact_version = $version " +
                                     "RETURN a.message + ', from node ' + id(a)",
-                            parameters("artifact_name", groupID + ":" + artifactId,
+                            parameters("artifact_name", getArtifactname(groupID, artifactId),
                                     "version", version));
                     return result.single().get(0).asString();
                 }

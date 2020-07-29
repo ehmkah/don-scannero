@@ -1,6 +1,5 @@
 package de.ehmkah.products.poc_dependencies;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.internal.impldep.org.junit.Assert;
@@ -15,6 +14,7 @@ public class ScannerPluginTest {
         project.getPlugins().apply("de.ehmkah.projects.poc_dependencies");
         project.getPlugins().apply("java");
         project.getDependencies().add("compile", "commons-lang:commons-lang:2.6");
+        project.getDependencies().add("compile", "com.google:guava:29.6");
         project.getTasks().create("scanner", GreetingToFileTask.class);
         Assert.assertNotNull(project.getTasks().findByName("scanner"));
         Task scannerTask = project.getTasks().findByName("scanner");

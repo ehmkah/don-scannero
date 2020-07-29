@@ -22,14 +22,13 @@ class GreetingToFileTask extends DefaultTask {
     }
 
     @Input
-    String groupID = "<groupIdShouldBeSet/>";
+    String groupID = "dummyGroupId";
 
     @Input
-    String artifactId = "<artifactIdShouldBeSet/>";
+    String artifactId = "dummyArtifactId";
 
     @Input
-    String version = "<versionShouldBeSet/>";
-
+    String version = "dummyVersion";
 
     @TaskAction
     public void scan() {
@@ -42,7 +41,7 @@ class GreetingToFileTask extends DefaultTask {
         for (Configuration configuration : configurations) {
             DependencySet dependencies = configuration.getDependencies();
             for (Dependency dependency : dependencies) {
-               // neo4Repository.writeDependency(dependency);
+                neo4Repository.writeDependency(groupID, artifactId, version, dependency);
             }
 
         }
