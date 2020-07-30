@@ -13,11 +13,18 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath "de.ehmkah.products:poc_dependency_gradle_via_plugin:0.0.1"
+        classpath "de.ehmkah.products:poc_dependency_gradle_via_plugin:0.0.5-SNAPSHOT"
     }
 }
 
 apply plugin: "de.ehmkah.projects.poc_dependencies"
+
+// define task
+task scanner(type: de.ehmkah.products.poc_dependencies.GreetingToFileTask) {
+    groupID = "HUHU"
+    artifactId = "artifactId"
+    version = "1.2.3.4"
+}
 ```
 
 * run `./gradlew scanner`

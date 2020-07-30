@@ -29,4 +29,13 @@ public class Artifact {
     public String getArtifactname() {
         return groupId + ":" + name;
     }
+
+    @Override
+    public String toString() {
+        return "Artifact{" +
+                "name='" + name + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", version='" + version + '\'' +
+                '}';
+    }
 }

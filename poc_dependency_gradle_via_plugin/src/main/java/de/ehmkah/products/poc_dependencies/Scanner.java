@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Scanner {
 
+    private static final boolean DEBUG = true;
+
     public List<Artifact> extractDependencies(Project project) {
         List<Artifact> result = new LinkedList<>();
 
@@ -19,10 +21,23 @@ public class Scanner {
         for (Configuration configuration : configurations) {
             DependencySet dependencies = configuration.getDependencies();
             for (Dependency dependency : dependencies) {
-                result.add(new Artifact(dependency.getName(), dependency.getGroup(), dependency.getVersion()));
+                Artifact artifact = new Artifact(dependency.getName(), dependency.getGroup(), dependency.getVersion());
+                if (ignoreArtifact(artifact)) {
+                    System.out.println("WARNING: unknown artifact found.");
+                } else {
+                    result.add(artifact);
+                }
+                if (DEBUG) {
+                    System.out.println(configuration.getName() + ":" + artifact);
+                }
+
             }
         }
 
         return result;
+    }
+
+    private boolean ignoreArtifact(Artifact artifact) {
+        return "unspecified".equals(artifact.getName());
     }
 }
