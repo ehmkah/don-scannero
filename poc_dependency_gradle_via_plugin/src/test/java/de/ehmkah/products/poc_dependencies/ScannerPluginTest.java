@@ -1,12 +1,16 @@
 package de.ehmkah.products.poc_dependencies;
 
+import de.ehmkah.products.poc_dependencies.writer.Neo4Repository;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.internal.impldep.org.junit.Assert;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class ScannerPluginTest {
+
+    private Neo4Repository neo4Repository = Mockito.mock(Neo4Repository.class);
 
     @Test
     public void testPlugin() {
