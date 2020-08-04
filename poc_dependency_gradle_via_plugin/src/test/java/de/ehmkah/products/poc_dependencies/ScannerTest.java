@@ -1,6 +1,7 @@
 package de.ehmkah.products.poc_dependencies;
 
 import de.ehmkah.products.poc_dependencies.model.Artifact;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Assertions;
@@ -50,6 +51,18 @@ class ScannerTest {
 
         List<Artifact> artifacts = sut.extractDependencies(project);
         Assertions.assertEquals(1, artifacts.size());
+    }
+
+    @Test
+    void testDependenciesExample3SpringBoot() {
+        project.getBuildscript().getRepositories().mavenCentral();
+        project.getBuildscript().getDependencies().add("classpath", "io.spring.gradle:dependency-management-plusgin:0.5.3.RELEASE");
+        project.getPluginManager().apply("io.spring.dependency-management");
+        project.getDependencies().add("implementation", "org.springframework.boot:spring-boot-starter-web");
+        project.getDependencies().add("testImplementation", "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0");
+
+        List<Artifact> artifacts = sut.extractDependencies(project);
+        Assertions.assertEquals(2, artifacts.size());
     }
 
 }
