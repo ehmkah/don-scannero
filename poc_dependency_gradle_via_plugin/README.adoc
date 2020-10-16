@@ -29,3 +29,8 @@ task scanner(type: de.ehmkah.products.poc_dependencies.GreetingToFileTask) {
 
 * run `./gradlew scanner`
 
+
+## cleaning
+
+MATCH (n)
+DETACH DELETE n

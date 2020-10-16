@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.neo4j.driver.Values.parameters;
 
-public class Neo4Repository implements AutoCloseable {
+public class Neo4Repository implements AutoCloseable, ScanneroWriter {
     private final Driver driver;
 
     public Neo4Repository(String uri, String user, String password) {
@@ -19,9 +19,11 @@ public class Neo4Repository implements AutoCloseable {
         driver.close();
     }
 
+
     public void writeDependency(Artifact basis, Artifact dependency) {
         writeArtifact(dependency);
         try (Session session = driver.session()) {
+            System.out.println("wrtigin" + dependency.getArtifactname() + dependency.getVersion());
             session.writeTransaction(new TransactionWork<String>() {
                 @Override
                 public String execute(Transaction tx) {
@@ -45,6 +47,7 @@ public class Neo4Repository implements AutoCloseable {
     }
 
 
+    @Override
     public void writeArtifact(Artifact artifact) {
         try (Session session = driver.session()) {
             session.writeTransaction(new TransactionWork<String>() {
@@ -62,6 +65,7 @@ public class Neo4Repository implements AutoCloseable {
         }
     }
 
+    @Override
     public void writeArtifacts(Artifact basis, List<Artifact> artifacts) {
         for (Artifact artifact : artifacts) {
             writeDependency(basis, artifact);
