@@ -1,5 +1,7 @@
 package de.ehmkah.products.poc_dependencies.model;
 
+import java.util.Objects;
+
 public class Artifact {
 
     private String name;
@@ -37,5 +39,20 @@ public class Artifact {
                 ", groupId='" + groupId + '\'' +
                 ", version='" + version + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Artifact artifact = (Artifact) o;
+        return Objects.equals(name, artifact.name) &&
+                Objects.equals(groupId, artifact.groupId) &&
+                Objects.equals(version, artifact.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, groupId, version);
     }
 }
