@@ -26,13 +26,13 @@ public class Parser {
         return result;
     }
 
-    private Optional<Artifact> extractArtifact(String line) {
+    Optional<Artifact> extractArtifact(String line) {
         if (line.startsWith(PREFIX)) {
             try {
                 String[] artifactParts = line.split(":");
-                return Optional.of(new Artifact(artifactParts[1], artifactParts[0].replace(PREFIX,""), artifactParts[2]));
+                return Optional.of(new Artifact(artifactParts[1], artifactParts[0].replace(PREFIX, ""), artifactParts[2]));
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Oops - parsing dependency "+ line + " not supported. Please open an issue.");
+                System.out.println("Oops - parsing dependency " + line + " not supported. Please open an issue.");
             }
         }
 
