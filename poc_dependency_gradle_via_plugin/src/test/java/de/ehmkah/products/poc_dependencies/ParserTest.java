@@ -19,6 +19,7 @@ public class ParserTest {
     static Stream<TestValue> valueProvider() {
         List<TestValue> values = new LinkedList<>();
         values.add(new TestValue("+--- com.google.guava:guava:29.0-jre", new Artifact("guava", "com.google.guava", "29.0-jre")));
+        values.add(new TestValue("\\--- org.springframework.boot:spring-boot-starter-web -> 2.3.3.RELEASE", new Artifact("org.springframework.boot", "spring-boot-starter-web", "2.3.3.RELEASE")));
 
         // currently not parsed
         values.add(new TestValue("|    +--- com.google.guava:failureaccess:1.0.1"));
@@ -39,11 +40,11 @@ public class ParserTest {
         List<Artifact> actual = sut.parse(inputStream);
 // THEN
         Assertions.assertNotNull(actual);
-        //Assertions.assertEquals(4, actual.size());
+        Assertions.assertEquals(4, actual.size());
         Assertions.assertEquals(new Artifact("guava", "com.google.guava", "29.0-jre"), actual.get(0));
-
-        Assertions.assertEquals(new Artifact("junit-jupiter-api", "org.junit.jupiter", "5.6.2"), actual.get(1));
-        Assertions.assertEquals(new Artifact("junit-jupiter-engine", "org.junit.jupiter", "5.6.2"), actual.get(2));
+        Assertions.assertEquals(new Artifact("org.springframework.boot", "spring-boot-starter-web", "2.3.3.RELEASE"), actual.get(1));
+        Assertions.assertEquals(new Artifact("junit-jupiter-api", "org.junit.jupiter", "5.6.2"), actual.get(2));
+        Assertions.assertEquals(new Artifact("junit-jupiter-engine", "org.junit.jupiter", "5.6.2"), actual.get(3));
 
     }
 

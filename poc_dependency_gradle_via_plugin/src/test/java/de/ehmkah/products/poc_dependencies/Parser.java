@@ -30,16 +30,29 @@ public class Parser {
 
     Optional<Artifact> extractArtifact(String line) {
         if (line.startsWith(PREFIX_1) || line.startsWith(PREFIX_2)) {
+            line = removeTrailingGarbage(line);
             try {
                 String[] artifactParts = line.split(":");
                 String version = artifactParts[2];
                 if (!version.contains(" ")) {
-                    return Optional.of(new Artifact(artifactParts[1], removeTrailingGarbage(artifactParts[0]), version));
+                    return Optional.of(new Artifact(artifactParts[1], artifactParts[0], version));
                 } else {
                     return Optional.empty();
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("Oops - parsing dependency " + line + " not supported. Please open an issue.");
+                try {
+                    String[] artifactParts = line.split(":");
+                    String[] artifactAndVersion = artifactParts[1].split("->");
+                    String version = artifactAndVersion[1].trim();
+                    if (!version.contains(" ")) {
+                        String groupId = artifactParts[0];
+                        return Optional.of(new Artifact(groupId, artifactAndVersion[0].trim(), version));
+                    } else {
+                        return Optional.empty();
+                    }
+                } catch (Exception e2) {
+                    System.out.println("Oops - parsing dependency " + line + " not supported. Please open an issue.");
+                }
             }
         }
 
