@@ -46,7 +46,7 @@ public class Parser {
                     String version = artifactAndVersion[1].trim();
                     if (!version.contains(" ")) {
                         String groupId = artifactParts[0];
-                        return Optional.of(new Artifact(groupId, artifactAndVersion[0].trim(), version));
+                        return Optional.of(new Artifact(artifactAndVersion[0].trim(), groupId, version));
                     } else {
                         return Optional.empty();
                     }

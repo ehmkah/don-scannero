@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface ScanneroWriter {
 
-
     void writeArtifact(Artifact artifact);
 
     void writeArtifacts(Artifact basis, List<Artifact> artifacts);
