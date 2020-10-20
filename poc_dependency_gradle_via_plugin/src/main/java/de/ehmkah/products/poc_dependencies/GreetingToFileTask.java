@@ -29,7 +29,6 @@ class GreetingToFileTask extends DefaultTask {
     @Input
     String version = "dummyVersion";
     private ScanneroWriter scanneroWriter;
-    private Scanner scanner;
     private Parser parser;
     private File outputDir = new File(getProject().getBuildDir().getAbsolutePath() + "/scannero/");
 
@@ -37,7 +36,6 @@ class GreetingToFileTask extends DefaultTask {
     public GreetingToFileTask() {
         //scanneroWriter = new SystemOutWriter();
         scanneroWriter = new Neo4Repository("bolt://localhost:7687", "neo4j", "password");
-        scanner = new Scanner();
         parser = new Parser();
     }
 
