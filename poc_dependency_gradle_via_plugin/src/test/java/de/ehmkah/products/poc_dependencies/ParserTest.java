@@ -42,7 +42,7 @@ public class ParserTest {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(4, actual.size());
         Assertions.assertEquals(new Artifact("guava", "com.google.guava", "29.0-jre"), actual.get(0));
-        Assertions.assertEquals(new Artifact("org.springframework.boot", "spring-boot-starter-web", "2.3.3.RELEASE"), actual.get(1));
+        Assertions.assertEquals(new Artifact("spring-boot-starter-web", "org.springframework.boot", "2.3.3.RELEASE"), actual.get(1));
         Assertions.assertEquals(new Artifact("junit-jupiter-api", "org.junit.jupiter", "5.6.2"), actual.get(2));
         Assertions.assertEquals(new Artifact("junit-jupiter-engine", "org.junit.jupiter", "5.6.2"), actual.get(3));
     }
