@@ -45,7 +45,6 @@ public class ParserTest {
         Assertions.assertEquals(new Artifact("org.springframework.boot", "spring-boot-starter-web", "2.3.3.RELEASE"), actual.get(1));
         Assertions.assertEquals(new Artifact("junit-jupiter-api", "org.junit.jupiter", "5.6.2"), actual.get(2));
         Assertions.assertEquals(new Artifact("junit-jupiter-engine", "org.junit.jupiter", "5.6.2"), actual.get(3));
-
     }
 
     @ParameterizedTest
