@@ -6,7 +6,6 @@ import de.ehmkah.products.poc_dependencies.writer.ScanneroWriter;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.diagnostics.AbstractReportTask;
@@ -20,9 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 class DonScanneroTask extends DefaultTask {
-
-    @Input
-    String artifactId = "dummyArtifactId";
 
     private ScanneroWriter scanneroWriter;
     private Parser parser;
@@ -46,9 +42,9 @@ class DonScanneroTask extends DefaultTask {
     public void scan() throws IOException {
         configuration = valueReader.readValues(getProject());
         System.out.println("groupID:" + configuration.getGroup());
-        System.out.println("artifactId:" + artifactId);
+        System.out.println("artifactId:" + configuration.getName());
         System.out.println("version:" + configuration.getVersion());
-        Artifact basis = new Artifact(configuration.getGroup(), artifactId, configuration.getVersion());
+        Artifact basis = new Artifact(configuration.getGroup(), configuration.getName(), configuration.getVersion());
 
         Map<Project, Set<Task>> allTasks = getProject().getAllTasks(false);
         String fileName = outputDir.getCanonicalPath() + "/parsedDependencies";

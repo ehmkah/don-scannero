@@ -7,7 +7,13 @@ public class ValueReader {
     DonScanneroConfiguration readValues(Project project) {
         String projectVersion = readVersionOrFail(project);
         String group = readGroupIdOrFail(project);
-        return new DonScanneroConfiguration(projectVersion, group);
+        String projectName = readProjectName(project);
+        return new DonScanneroConfiguration(projectName, group, projectVersion);
+    }
+
+    private String readProjectName(Project project) {
+        String projectName = project.getName();
+        return projectName;
     }
 
     private String readGroupIdOrFail(Project project) {

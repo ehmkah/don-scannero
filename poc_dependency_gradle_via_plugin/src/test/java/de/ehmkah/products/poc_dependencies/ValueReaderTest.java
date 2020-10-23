@@ -10,7 +10,7 @@ class ValueReaderTest {
     private ValueReader sut = new ValueReader();
 
     @Test()
-    public void testReadValuesNoVersionSet() {
+    public void testReadValuesVersionNotSet() {
         // GIVEN
         Project project = ProjectBuilder.builder().build();
 
@@ -32,10 +32,11 @@ class ValueReaderTest {
         // THEN
         Assertions.assertEquals("1.2.3", actual.getVersion());
         Assertions.assertEquals("com.github.ehmkah", actual.getGroup());
+        Assertions.assertEquals("test", actual.getName());
     }
 
     @Test
-    public void testReadValuesGroupNoSet() {
+    public void testReadValuesGroupNotSet() {
         // GIVEN
         Project project = ProjectBuilder.builder().build();
         project.setVersion("1.2.3");
@@ -45,4 +46,5 @@ class ValueReaderTest {
         Assertions.assertThrows(IllegalArgumentException.class, () ->
                 sut.readValues(project));
     }
+
 }

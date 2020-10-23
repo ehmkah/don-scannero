@@ -7,10 +7,12 @@ public class DonScanneroConfiguration {
 
     private String version;
     private String group;
+    private String name;
 
-    public DonScanneroConfiguration(String version, String group) {
+    public DonScanneroConfiguration(String name, String group, String version) {
         this.version = version;
         this.group = group;
+        this.name = name;
     }
 
     public String getVersion() {
@@ -19,5 +21,9 @@ public class DonScanneroConfiguration {
 
     public String getGroup() {
         return group;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }
