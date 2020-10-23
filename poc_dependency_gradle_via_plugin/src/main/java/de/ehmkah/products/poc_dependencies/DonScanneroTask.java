@@ -22,8 +22,6 @@ import java.util.Set;
 class DonScanneroTask extends DefaultTask {
 
     @Input
-    String groupID = "dummyGroupId";
-    @Input
     String artifactId = "dummyArtifactId";
 
     private ScanneroWriter scanneroWriter;
@@ -47,10 +45,10 @@ class DonScanneroTask extends DefaultTask {
     @TaskAction
     public void scan() throws IOException {
         configuration = valueReader.readValues(getProject());
-        System.out.println("groupID:" + groupID);
+        System.out.println("groupID:" + configuration.getGroup());
         System.out.println("artifactId:" + artifactId);
         System.out.println("version:" + configuration.getVersion());
-        Artifact basis = new Artifact(groupID, artifactId, configuration.getVersion());
+        Artifact basis = new Artifact(configuration.getGroup(), artifactId, configuration.getVersion());
 
         Map<Project, Set<Task>> allTasks = getProject().getAllTasks(false);
         String fileName = outputDir.getCanonicalPath() + "/parsedDependencies";

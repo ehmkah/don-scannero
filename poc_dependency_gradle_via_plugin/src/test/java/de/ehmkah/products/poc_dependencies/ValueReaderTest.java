@@ -20,15 +20,29 @@ class ValueReaderTest {
     }
 
     @Test()
-    public void testReadValuesVersionSet() {
+    public void testReadValuesAllValuesSet() {
         // GIVEN
         Project project = ProjectBuilder.builder().build();
         project.setVersion("1.2.3");
+        project.setGroup("com.github.ehmkah");
 
         // WHEN
         DonScanneroConfiguration actual = sut.readValues(project);
 
         // THEN
         Assertions.assertEquals("1.2.3", actual.getVersion());
+        Assertions.assertEquals("com.github.ehmkah", actual.getGroup());
+    }
+
+    @Test
+    public void testReadValuesGroupNoSet() {
+        // GIVEN
+        Project project = ProjectBuilder.builder().build();
+        project.setVersion("1.2.3");
+
+        // WHEN
+        // THEN
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+                sut.readValues(project));
     }
 }
