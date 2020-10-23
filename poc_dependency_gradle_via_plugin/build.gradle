@@ -16,7 +16,7 @@ gradlePlugin {
     plugins {
         simplePlugin {
             id = 'de.ehmkah.projects.poc_dependencies'
-            implementationClass = 'de.ehmkah.products.poc_dependencies.ScannerPlugin'
+            implementationClass = 'de.ehmkah.products.poc_dependencies.DonScanneroPlugin'
         }
     }
 }

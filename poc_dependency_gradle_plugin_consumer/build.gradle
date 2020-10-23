@@ -49,5 +49,3 @@ test {
 }
 
 
-task scanner(type: de.ehmkah.products.poc_dependencies.DonScanneroTask) {
-}

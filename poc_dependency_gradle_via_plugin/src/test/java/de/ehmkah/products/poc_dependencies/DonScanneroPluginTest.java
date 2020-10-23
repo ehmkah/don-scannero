@@ -5,7 +5,7 @@ import org.gradle.internal.impldep.org.junit.Assert;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
 
-public class ScannerPluginTest {
+public class DonScanneroPluginTest {
 
     @Test
     public void testPluginApplied() {
