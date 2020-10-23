@@ -21,9 +21,7 @@ apply plugin: "de.ehmkah.projects.poc_dependencies"
 
 // define task
 task scanner(type: de.ehmkah.products.poc_dependencies.DonScanneroTask) {
-    groupID = "HUHU"
     artifactId = "artifactId"
-    version = "1.2.3.4"
 }
 ```
 
