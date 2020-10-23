@@ -25,11 +25,12 @@ class DonScanneroTask extends DefaultTask {
     String groupID = "dummyGroupId";
     @Input
     String artifactId = "dummyArtifactId";
-    @Input
-    String version = "dummyVersion";
+
     private ScanneroWriter scanneroWriter;
     private Parser parser;
     private File outputDir = new File(getProject().getBuildDir().getAbsolutePath() + "/scannero/");
+    private ValueReader valueReader = new ValueReader();
+    private DonScanneroConfiguration configuration;
 
     @Inject
     public DonScanneroTask() {
@@ -43,13 +44,13 @@ class DonScanneroTask extends DefaultTask {
         return outputDir;
     }
 
-
     @TaskAction
     public void scan() throws IOException {
+        configuration = valueReader.readValues(getProject());
         System.out.println("groupID:" + groupID);
         System.out.println("artifactId:" + artifactId);
-        System.out.println("version:" + version);
-        Artifact basis = new Artifact(groupID, artifactId, version);
+        System.out.println("version:" + configuration.getVersion());
+        Artifact basis = new Artifact(groupID, artifactId, configuration.getVersion());
 
         Map<Project, Set<Task>> allTasks = getProject().getAllTasks(false);
         String fileName = outputDir.getCanonicalPath() + "/parsedDependencies";
@@ -69,4 +70,5 @@ class DonScanneroTask extends DefaultTask {
         scanneroWriter.writeArtifact(basis);
         scanneroWriter.writeArtifacts(basis, artifacts);
     }
+
 }
