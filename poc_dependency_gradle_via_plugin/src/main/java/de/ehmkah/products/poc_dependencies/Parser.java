@@ -35,7 +35,7 @@ public class Parser {
                 String[] artifactParts = line.split(":");
                 String version = artifactParts[2];
                 if (!version.contains(" ")) {
-                    return Optional.of(new Artifact(artifactParts[1], artifactParts[0], version));
+                    return Optional.of(new Artifact(artifactParts[0], artifactParts[1], version));
                 } else {
                     return Optional.empty();
                 }
@@ -46,7 +46,7 @@ public class Parser {
                     String version = artifactAndVersion[1].trim();
                     if (!version.contains(" ")) {
                         String groupId = artifactParts[0];
-                        return Optional.of(new Artifact(artifactAndVersion[0].trim(), groupId, version));
+                        return Optional.of(new Artifact(groupId, artifactAndVersion[0].trim(), version));
                     } else {
                         return Optional.empty();
                     }

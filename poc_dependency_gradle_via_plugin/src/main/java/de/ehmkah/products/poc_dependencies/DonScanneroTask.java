@@ -3,7 +3,6 @@ package de.ehmkah.products.poc_dependencies;
 import de.ehmkah.products.poc_dependencies.model.Artifact;
 import de.ehmkah.products.poc_dependencies.writer.Neo4Repository;
 import de.ehmkah.products.poc_dependencies.writer.ScanneroWriter;
-import de.ehmkah.products.poc_dependencies.writer.SystemOutWriter;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-class GreetingToFileTask extends DefaultTask {
+class DonScanneroTask extends DefaultTask {
 
     @Input
     String groupID = "dummyGroupId";
@@ -33,7 +32,7 @@ class GreetingToFileTask extends DefaultTask {
     private File outputDir = new File(getProject().getBuildDir().getAbsolutePath() + "/scannero/");
 
     @Inject
-    public GreetingToFileTask() {
+    public DonScanneroTask() {
         //scanneroWriter = new SystemOutWriter();
         scanneroWriter = new Neo4Repository("bolt://localhost:7687", "neo4j", "password");
         parser = new Parser();
@@ -50,7 +49,7 @@ class GreetingToFileTask extends DefaultTask {
         System.out.println("groupID:" + groupID);
         System.out.println("artifactId:" + artifactId);
         System.out.println("version:" + version);
-        Artifact basis = new Artifact(artifactId, groupID, version);
+        Artifact basis = new Artifact(groupID, artifactId, version);
 
         Map<Project, Set<Task>> allTasks = getProject().getAllTasks(false);
         String fileName = outputDir.getCanonicalPath() + "/parsedDependencies";

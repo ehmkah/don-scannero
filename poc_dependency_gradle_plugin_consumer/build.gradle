@@ -49,7 +49,7 @@ test {
 }
 
 
-task scanner(type: de.ehmkah.products.poc_dependencies.GreetingToFileTask) {
+task scanner(type: de.ehmkah.products.poc_dependencies.DonScanneroTask) {
     dependsOn("dependencies")
     groupID = "HUHU"
     artifactId = "artifactId"

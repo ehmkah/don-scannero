@@ -43,7 +43,6 @@ public class Neo4Repository implements AutoCloseable, ScanneroWriter {
         }
     }
 
-
     @Override
     public void writeArtifact(Artifact artifact) {
         try (Session session = driver.session()) {

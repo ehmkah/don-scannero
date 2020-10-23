@@ -10,7 +10,7 @@ public class Artifact {
 
     private String version;
 
-    public Artifact(String name, String groupId, String version) {
+    public Artifact(String groupId, String name, String version) {
         this.name = name;
         this.groupId = groupId;
         this.version = version;
