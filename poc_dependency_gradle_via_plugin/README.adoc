@@ -4,20 +4,24 @@ This gradle plugin scans gradle based projects (sic!)
 
 == Using
 
-* Run `./gradlew publishMavenLocal`
-** Maybe one day plugin is available via some well done mavenRepo
+* at the moment there are only snapshot builds available
 * Add the following to your `build.gradle`
 ```
 buildscript {
     repositories {
-        mavenLocal()
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
     }
     dependencies {
-        classpath "de.ehmkah.products:poc_dependency_gradle_via_plugin:0.0.7-SNAPSHOT"
+          classpath "com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT"
     }
 }
 
-apply plugin: "de.ehmkah.projects.poc_dependencies"
+apply plugin: "com.github.ehmkah.don-scannero"
 
 ```
 
