@@ -10,12 +10,13 @@
 plugins {
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'signing'
 }
 
 gradlePlugin {
     plugins {
         simplePlugin {
-            id = 'de.ehmkah.projects.poc_dependencies'
+            id = 'com.github.ehmkah.don-scannero'
             implementationClass = 'de.ehmkah.products.poc_dependencies.DonScanneroPlugin'
         }
     }
@@ -38,4 +39,61 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    repositories {
+        maven {
+            url = "https://oss.sonatype.org/content/repositories/snapshots"
+            //url = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username "XXXXX"
+                password "XXXXX"
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.github.ehmkah'
+            artifactId = 'don-scannero'
+            pom {
+                name = 'Don Scannero'
+                description = 'A tool which scans your gradle dependencies and write them to a neo4j-database.'
+                url = 'https://github.com/ehmkah/don-scannero'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ehmkah'
+                        name = 'Michael Krauße'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@github.com:ehmkah/don-scannero.git'
+                    url = 'https://github.com/ehmkah/don-scannero.git'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }
