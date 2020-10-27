@@ -7,8 +7,9 @@ public class DonScanneroPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        project.getExtensions().create("scannero", DonScanneroPlugin.class);
-        project.getTasks().create("scannero", DonScanneroTask.class);
+        DonScanneroPluginConfiguration scanneroPluginConfiguration = project.getExtensions().create("scannero", DonScanneroPluginConfiguration.class);
+        DonScanneroTask scanneroTask = project.getTasks().create("scannero", DonScanneroTask.class);
+        scanneroTask.setDonScanneroPluginConfiguration(scanneroPluginConfiguration);
     }
 }
 

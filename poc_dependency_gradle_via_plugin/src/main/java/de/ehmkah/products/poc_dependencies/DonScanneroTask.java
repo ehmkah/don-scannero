@@ -26,10 +26,12 @@ class DonScanneroTask extends DefaultTask {
     private ValueReader valueReader = new ValueReader();
     private DonScanneroConfiguration configuration;
 
+    private DonScanneroPluginConfiguration donScanneroPluginConfiguration;
+
+
     @Inject
     public DonScanneroTask() {
         //scanneroWriter = new SystemOutWriter();
-        scanneroWriter = new Neo4Repository("bolt://localhost:7687", "neo4j", "password");
         parser = new Parser();
     }
 
@@ -41,6 +43,8 @@ class DonScanneroTask extends DefaultTask {
     @TaskAction
     public void scan() throws IOException {
         configuration = valueReader.readValues(getProject());
+        System.out.println(donScanneroPluginConfiguration.getNeo4jUser());
+        scanneroWriter = new Neo4Repository(donScanneroPluginConfiguration.getNeo4jUri(), donScanneroPluginConfiguration.getNeo4jUser(), donScanneroPluginConfiguration.getNeo4jPassword());
         System.out.println("groupID:" + configuration.getGroup());
         System.out.println("artifactId:" + configuration.getName());
         System.out.println("version:" + configuration.getVersion());
@@ -65,4 +69,11 @@ class DonScanneroTask extends DefaultTask {
         scanneroWriter.writeArtifacts(basis, artifacts);
     }
 
+    public DonScanneroPluginConfiguration getDonScanneroPluginConfiguration() {
+        return donScanneroPluginConfiguration;
+    }
+
+    public void setDonScanneroPluginConfiguration(DonScanneroPluginConfiguration donScanneroPluginConfiguration) {
+        this.donScanneroPluginConfiguration = donScanneroPluginConfiguration;
+    }
 }
