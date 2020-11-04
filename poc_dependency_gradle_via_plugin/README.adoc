@@ -1,11 +1,13 @@
 == Scanner for gradle
 
-This gradle plugin scans gradle based projects (sic!)
+This gradle plugin scans gradle based projects.
 
 == Using
 
+=== Configuring
+
 * at the moment there are only snapshot builds available
-* Add the following to your `build.gradle`
+* Add the following to your `build.gradle` to make _don_scannero_ known to your build
 ```
 buildscript {
     repositories {
@@ -20,24 +22,41 @@ buildscript {
           classpath "com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT"
     }
 }
-
+```
+* If you have a gradle single-project you apply _don_scannero_ like this
+```
 apply plugin: "com.github.ehmkah.don-scannero"
+```
 
-// optional configure which neo4j server to use (default values are shown)
+* If you have a gradle multi-project you apply _don_scannero_ like this
+```
+configure(allprojects) {
+  // your other configurations if you have them
+  apply plugin: "com.github.ehmkah.don-scannero"
+}
+```
+
+* Optional - Configure which neo4j server to use (default values are shown)
+```
 scannero {
  neo4jUser = "neo4j";
  neo4jPassword = "password";
  neo4jUri = "bolt://localhost:7687"
 }
-
 ```
+
+=== Running
 
 * start neo4j server `docker run -p 7474:7474 -p 7687:7687 --env=NEO4J_AUTH=none neo4j:4.0.4`
 * run `./gradlew scannero`
 * open browser `http://localhost:7474/`
-* login no credentials needed and discover your build
+* login no credentials needed and explore your build
 
-## cleaning
+=== Exploring
 
-MATCH (n)
-DETACH DELETE n
+Shows some queries which might be useful
+
+* Show all nodes - `MATCH (n) return (n)`
+* Show all consumers of artifact - `MATCH(n) -> (a{artifact_name:'yourIdentifier'}) return n`
+* Used versions of artifacts - `MATCH(n) -> (a{artifact_name:'yourIdentifier'}) return a.artifact_version`
+* Cleanes complete database - `MATCH (n) DETACH DELETE n`
