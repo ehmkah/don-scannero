@@ -15,31 +15,31 @@ import org.codehaus.groovy.ast.expr.MapEntryExpression;
 import org.codehaus.groovy.ast.expr.MapExpression;
 import org.codehaus.groovy.ast.expr.MethodCallExpression;
 
-/**
- * @author Lovett Li
- */
 public class FindDependenciesVisitor extends CodeVisitorSupport
 {
 
     private int dependenceLineNum = -1;
     private int columnNum = -1;
     private List<GradleDependency> dependencies = new ArrayList<>();
+    private boolean insideBuildscript = false;
+
 
     @Override
     public void visitMethodCallExpression( MethodCallExpression call )
     {
-        if( !( call.getMethodAsString().equals( "buildscript" ) ) )
-        {
-            if( call.getMethodAsString().equals( "dependencies" ) )
+        if( ( call.getMethodAsString().equals( "buildscript" ) ) ) {
+            insideBuildscript = true;
+
+            super.visitMethodCallExpression( call );
+            insideBuildscript=false;
+        }
+        if( call.getMethodAsString().equals( "dependencies" ) && insideBuildscript )
             {
                 if( dependenceLineNum == -1 )
                 {
                     dependenceLineNum = call.getLastLineNumber();
                 }
             }
-
-            super.visitMethodCallExpression( call );
-        }
     }
 
     @Override

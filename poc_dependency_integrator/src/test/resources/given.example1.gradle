@@ -8,15 +8,8 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
-            mavenContent {
-                snapshotsOnly()
-            }
-        }
     }
     dependencies {
-        classpath "com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT"
     }
 }
 
@@ -27,8 +20,6 @@ plugins {
     id 'org.springframework.boot' version '2.3.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 }
-
-apply plugin: "com.github.ehmkah.don-scannero"
 
 repositories {
     // Use jcenter for resolving dependencies.

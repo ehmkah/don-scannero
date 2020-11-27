@@ -27,9 +27,10 @@ public class GradleDependencyUpdater
     {
         this( IOUtils.toString( new FileInputStream( inputfile ), "UTF-8" ) );
         this.file = inputfile;
+        gradleFileContents = Files.readAllLines( Paths.get( file.toURI() ) );
     }
 
-    public GradleDependencyUpdater( String scriptContents ) throws MultipleCompilationErrorsException
+    private GradleDependencyUpdater( String scriptContents ) throws MultipleCompilationErrorsException
     {
         AstBuilder builder = new AstBuilder();
         nodes = builder.buildFromString( scriptContents );
@@ -39,7 +40,6 @@ public class GradleDependencyUpdater
     {
         FindDependenciesVisitor visitor = new FindDependenciesVisitor();
         walkScript( visitor );
-        gradleFileContents = Files.readAllLines( Paths.get( file.toURI() ) );
 
         if( visitor.getDependenceLineNum() == -1 )
         {
