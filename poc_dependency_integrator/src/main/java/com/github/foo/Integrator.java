@@ -13,10 +13,13 @@ public class Integrator {
         //GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(inputFile);
         //dependencyUpdater.insertDependency("        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
 
-        GradleApplyUpdater applyUpdater = new GradleApplyUpdater(inputFile);
-        applyUpdater.insertApply("apply plugin: \"com.github.ehmkah.don-scannero\"");
+        //GradleApplyUpdater applyUpdater = new GradleApplyUpdater(inputFile);
+        //applyUpdater.insertApply("apply plugin: \"com.github.ehmkah.don-scannero\"");
+
+        GradleRepositoryUpdater repositoryUpdater = new GradleRepositoryUpdater(inputFile);
+        repositoryUpdater.insertApply();
 
 
-        return applyUpdater.getGradleFileContents();
+        return repositoryUpdater.getGradleFileContents();
     }
 }
