@@ -1,16 +1,11 @@
 package com.github.foo;
 
-import org.apache.commons.io.IOUtils;
 import org.codehaus.groovy.ast.ASTNode;
 import org.codehaus.groovy.ast.GroovyCodeVisitor;
 import org.codehaus.groovy.ast.builder.AstBuilder;
 import org.codehaus.groovy.control.MultipleCompilationErrorsException;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class GradleDependencyUpdater {
 
-    private List<ASTNode> nodes;
+    private final List<ASTNode> nodes;
     private List<String> gradleFileContents;
 
     public GradleDependencyUpdater(List<String> gradleFileContents) throws MultipleCompilationErrorsException, IOException {
@@ -32,22 +27,18 @@ public class GradleDependencyUpdater {
         nodes = builder.buildFromString(scriptContents);
     }
 
-    public FindDependenciesVisitor insertDependency(String dependency) throws IOException {
+    public FindDependenciesVisitor insertDependency() throws IOException {
         FindDependenciesVisitor visitor = new FindDependenciesVisitor();
         walkScript(visitor);
 
         if (visitor.getDependenceLineNum() == -1) {
-            if (!dependency.startsWith("\t")) {
-                dependency = "\t" + dependency;
-                ;
-            }
 
             gradleFileContents.add("");
             gradleFileContents.add("dependencies {");
-            gradleFileContents.add(dependency);
+            gradleFileContents.add("        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
             gradleFileContents.add("}");
         } else {
-            gradleFileContents.add(visitor.getDependenceLineNum() - 1, dependency);
+            gradleFileContents.add(visitor.getDependenceLineNum() - 1, "        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
         }
 
         return visitor;

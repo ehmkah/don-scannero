@@ -13,14 +13,13 @@ public class Integrator {
 
     public List<String> integrate(final File inputFile) throws IOException {
         GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(Files.readAllLines(Paths.get(inputFile.toURI())));
-        dependencyUpdater.insertDependency("        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
+        dependencyUpdater.insertDependency();
 
         GradleApplyUpdater applyUpdater = new GradleApplyUpdater(dependencyUpdater.getGradleFileContents());
-        applyUpdater.insertApply("apply plugin: \"com.github.ehmkah.don-scannero\"");
+        applyUpdater.insertApply();
 
         GradleRepositoryUpdater repositoryUpdater = new GradleRepositoryUpdater(applyUpdater.getGradleFileContents());
         repositoryUpdater.insertApply();
-
 
         return applyUpdater.getGradleFileContents();
     }
