@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Lovett Li
@@ -19,13 +20,11 @@ import java.util.List;
 public class GradleDependencyUpdater {
 
     private List<ASTNode> nodes;
-    private File file;
     private List<String> gradleFileContents;
 
-    public GradleDependencyUpdater(File inputfile) throws MultipleCompilationErrorsException, IOException {
-        this(IOUtils.toString(new FileInputStream(inputfile), "UTF-8"));
-        this.file = inputfile;
-        gradleFileContents = Files.readAllLines(Paths.get(file.toURI()));
+    public GradleDependencyUpdater(List<String> gradleFileContents) throws MultipleCompilationErrorsException, IOException {
+        this(gradleFileContents.stream().collect(Collectors.joining("\n")));
+        this.gradleFileContents = gradleFileContents;
     }
 
     private GradleDependencyUpdater(String scriptContents) throws MultipleCompilationErrorsException {

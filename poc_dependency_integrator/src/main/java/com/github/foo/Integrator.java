@@ -2,6 +2,8 @@ package com.github.foo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ import java.util.List;
 public class Integrator {
 
     public List<String> integrate(final File inputFile) throws IOException {
-        GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(inputFile);
+        GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(Files.readAllLines(Paths.get(inputFile.toURI())));
         dependencyUpdater.insertDependency("        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
 
         //GradleApplyUpdater applyUpdater = new GradleApplyUpdater(inputFile);
