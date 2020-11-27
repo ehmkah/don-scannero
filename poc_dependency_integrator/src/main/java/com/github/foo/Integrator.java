@@ -10,11 +10,13 @@ import java.util.List;
 public class Integrator {
 
     public List<String> integrate(final File inputFile) throws IOException {
-        GradleDependencyUpdater updater = new GradleDependencyUpdater(inputFile);
+        //GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(inputFile);
+        //dependencyUpdater.insertDependency("        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
 
-        FindDependenciesVisitor visitor = updater.insertDependency(
-                "        classpath \"com.github.ehmkah:don-scannero:0.0.7-SNAPSHOT\"");
+        GradleApplyUpdater applyUpdater = new GradleApplyUpdater(inputFile);
+        applyUpdater.insertApply("apply plugin: \"com.github.ehmkah.don-scannero\"");
 
-        return updater.getGradleFileContents();
+
+        return applyUpdater.getGradleFileContents();
     }
 }

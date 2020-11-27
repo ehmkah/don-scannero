@@ -84,14 +84,6 @@ public class GradleDependencyUpdater
         return visitor;
     }
 
-    public List<GradleDependency> getAllDependencies()
-    {
-        FindDependenciesVisitor visitor = new FindDependenciesVisitor();
-        walkScript( visitor );
-
-        return visitor.getDependencies();
-    }
-
     public void walkScript( GroovyCodeVisitor visitor )
     {
         for( ASTNode node : nodes )

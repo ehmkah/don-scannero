@@ -23,7 +23,6 @@ public class FindDependenciesVisitor extends CodeVisitorSupport
     private List<GradleDependency> dependencies = new ArrayList<>();
     private boolean insideBuildscript = false;
 
-
     @Override
     public void visitMethodCallExpression( MethodCallExpression call )
     {
