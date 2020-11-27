@@ -1,0 +1,10 @@
+== Integrator
+
+Can be use to apply _Don_scannero_ so several gradle projects without adding the plugin.
+
+=== How to use is
+
+* clone repository
+* Go to the place where your repositories live - `cd ~projects`
+* Run the integrator - `integrator.sh`
+* Relax a moment because it takes some time
