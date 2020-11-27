@@ -18,8 +18,8 @@ public class Integrator {
         GradleApplyUpdater applyUpdater = new GradleApplyUpdater(dependencyUpdater.getGradleFileContents());
         applyUpdater.insertApply("apply plugin: \"com.github.ehmkah.don-scannero\"");
 
-        //GradleRepositoryUpdater repositoryUpdater = new GradleRepositoryUpdater(inputFile);
-        //repositoryUpdater.insertApply();
+        GradleRepositoryUpdater repositoryUpdater = new GradleRepositoryUpdater(applyUpdater.getGradleFileContents());
+        repositoryUpdater.insertApply();
 
 
         return applyUpdater.getGradleFileContents();
