@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Lovett Li
@@ -22,10 +23,9 @@ public class GradleApplyUpdater {
     private File file;
     private List<String> gradleFileContents;
 
-    public GradleApplyUpdater(File inputfile) throws MultipleCompilationErrorsException, IOException {
-        this(IOUtils.toString(new FileInputStream(inputfile), "UTF-8"));
-        this.file = inputfile;
-        gradleFileContents = Files.readAllLines(Paths.get(file.toURI()));
+    public GradleApplyUpdater(List<String> gradleFileContents) throws MultipleCompilationErrorsException, IOException {
+        this(gradleFileContents.stream().collect(Collectors.joining("\n")));
+        this.gradleFileContents = gradleFileContents;
     }
 
     private GradleApplyUpdater(String scriptContents) throws MultipleCompilationErrorsException {
