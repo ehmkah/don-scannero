@@ -28,7 +28,7 @@ public class Application {
     }
 
     public void run(String projectPath) throws IOException {
-        File buildFile = new File(projectPath);
+        File buildFile = new File(projectPath+"build.gradle");
         List<String> newgradleFile = integrator.integrate(buildFile);
 
         IOUtils.write(String.join("\n", newgradleFile), new FileOutputStream(buildFile), StandardCharsets.UTF_8);
