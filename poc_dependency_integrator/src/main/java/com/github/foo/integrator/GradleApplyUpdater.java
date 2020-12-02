@@ -1,4 +1,4 @@
-package com.github.foo;
+package com.github.foo.integrator;
 
 import org.codehaus.groovy.ast.ASTNode;
 import org.codehaus.groovy.ast.GroovyCodeVisitor;

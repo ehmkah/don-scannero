@@ -1,4 +1,4 @@
-package com.github.foo;
+package com.github.foo.integrator;
 
 
 import org.codehaus.groovy.ast.CodeVisitorSupport;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FindApplyVisitor extends CodeVisitorSupport {
+public class FindRepositoryVisitor extends CodeVisitorSupport {
 
     private int dependenceLineNum = -1;
     private int columnNum = -1;
@@ -23,9 +23,9 @@ public class FindApplyVisitor extends CodeVisitorSupport {
             super.visitMethodCallExpression(call);
             insideBuildscript = false;
         }
-        if (call.getMethodAsString().equals("repositories") && !insideBuildscript) {
+        if (call.getMethodAsString().equals("repositories") && insideBuildscript) {
             if (dependenceLineNum == -1) {
-                dependenceLineNum = call.getLineNumber();
+                dependenceLineNum = call.getLastLineNumber();
             }
         }
     }

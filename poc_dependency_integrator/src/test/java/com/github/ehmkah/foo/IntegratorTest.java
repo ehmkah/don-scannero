@@ -1,8 +1,6 @@
 package com.github.ehmkah.foo;
 
-import com.github.foo.FindDependenciesVisitor;
-import com.github.foo.GradleDependencyUpdater;
-import com.github.foo.Integrator;
+import com.github.foo.integrator.Integrator;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
