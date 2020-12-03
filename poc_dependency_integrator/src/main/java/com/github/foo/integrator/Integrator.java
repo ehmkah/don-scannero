@@ -12,15 +12,24 @@ import java.util.List;
 public class Integrator {
 
     public List<String> integrate(final File inputFile) throws IOException {
-        GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(Files.readAllLines(Paths.get(inputFile.toURI())));
-        dependencyUpdater.insertDependency();
+        List<String> gradleFileContents = Files.readAllLines(Paths.get(inputFile.toURI()));
+        if (integrationNeeded()) {
+            GradleDependencyUpdater dependencyUpdater = new GradleDependencyUpdater(gradleFileContents);
+            dependencyUpdater.insertDependency();
 
-        GradleApplyUpdater applyUpdater = new GradleApplyUpdater(dependencyUpdater.getGradleFileContents());
-        applyUpdater.insertApply();
+            GradleApplyUpdater applyUpdater = new GradleApplyUpdater(dependencyUpdater.getGradleFileContents());
+            applyUpdater.insertApply();
 
-        GradleRepositoryUpdater repositoryUpdater = new GradleRepositoryUpdater(applyUpdater.getGradleFileContents());
-        repositoryUpdater.insertApply();
+            GradleRepositoryUpdater repositoryUpdater = new GradleRepositoryUpdater(applyUpdater.getGradleFileContents());
+            repositoryUpdater.insertApply();
 
-        return applyUpdater.getGradleFileContents();
+            return applyUpdater.getGradleFileContents();
+        } else {
+            return gradleFileContents;
+        }
+    }
+
+    private boolean integrationNeeded() {
+        return false;
     }
 }
