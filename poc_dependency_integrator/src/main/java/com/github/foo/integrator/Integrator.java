@@ -30,6 +30,6 @@ public class Integrator {
     }
 
     private boolean integrationNeeded() {
-        return false;
+        return true;
     }
 }
